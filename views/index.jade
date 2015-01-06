@@ -6,11 +6,17 @@ html
         script(src="components/jquery/dist/jquery.min.js")
         script(src="components/angularjs/angular.min.js")
         script(src="index.js")
-    body
-        .container(ng-app="Todolist")
-            form.form-inline.clearfix.topbar
-                input.form-control.pull-right(type="text", placeholder="Search", ng-model="query")
-            ul.list-group(ng-controller="ListController")
-                li.list-group-item(ng-repeat="item in items | filter:query")
+    body(ng-app="Todolist")
+        .container(ng-controller="ListController")
+            .topbar.clearfix
+                form.form-inline.pull-right
+                    select.form-control(ng-model="ordering")
+                        option(value="datetime") Datetime
+                        option(value="title") Title
+                    = " "
+                    input.form-control(type="text", placeholder="Search", ng-model="query")
+            ul.list-group
+                li.list-group-item(ng-repeat="item in items | filter:query | orderBy:ordering")
                     h4.list-group-item-heading {{item.title}}
                     p.list-group-item-text {{item.description}}
+                    p.list-group-item-text {{item.datetime}}

@@ -7,11 +7,20 @@ App.controller('ListController', function($scope) {
     $scope.items = [
         {
             title: 'Todo 1',
-            description: 'This is my first todo.'
+            description: 'This is my first todo.',
+            datetime: '2014-10-31 12:34:00'
         },
         {
             title: 'Todo 2',
-            description: 'This is my second todo.'
+            description: 'This is my second todo.',
+            datetime: '2014-12-15 12:34:00'
+        },
+        {
+            title: 'Todo 3',
+            description: 'This is my third todo.',
+            datetime: '2014-11-16 12:34:00'
         }
-    ]
+    ];
+
+    $scope.ordering = 'title';
 });
