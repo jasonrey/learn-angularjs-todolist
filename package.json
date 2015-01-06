@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jasonrey/learn-angularjs-todolist",
   "dependencies": {
-    "express": "^4.10.7"
+    "express": "^4.10.7",
+    "jade": "^1.8.2"
   }
 }
