@@ -1,0 +1,22 @@
+{
+  "name": "learn-angularjs-todolist",
+  "version": "1.0.0",
+  "description": "Sample todo list app using angularjs with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://jasonrey@github.com/jasonrey/learn-angularjs-todolist.git"
+  },
+  "author": "Jason Rey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonrey/learn-angularjs-todolist/issues"
+  },
+  "homepage": "https://github.com/jasonrey/learn-angularjs-todolist",
+  "dependencies": {
+    "express": "^4.10.7"
+  }
+}
