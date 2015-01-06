@@ -13,24 +13,40 @@ var App = angular.module('Todolist', []);
 // App.controller('ListController', function($scope) {$scope.items = []});
 // App.controller('ListController', ['$scope', function(scope) {scope.items = []}]);
 
-App.controller('ListController', ['$scope', function($scope) {
-    $scope.items = [
-        {
-            title: 'Todo 1',
-            description: 'This is my first todo.',
-            datetime: '2014-10-31 12:34:00'
-        },
-        {
-            title: 'Todo 2',
-            description: 'This is my second todo.',
-            datetime: '2014-12-15 12:34:00'
-        },
-        {
-            title: 'Todo 3',
-            description: 'This is my third todo.',
-            datetime: '2014-11-16 12:34:00'
-        }
-    ];
+App.controller('ListController', ['$scope', '$q', function($scope, $q) {
 
-    $scope.ordering = 'title';
+    // Showcases Promise concept where data can be retrieved through server
+
+    // Initialises a new deferred object
+    var dfd = $q.defer();
+
+    // Binds the (success, error, notify) callbacks to the promise object's then method
+    dfd.promise.then(function(data) {
+        $scope.items = data;
+    });
+
+    // Mimic server call that takes 2 seconds to get the data
+    setTimeout(function() {
+        // Resolve the deferred object
+        dfd.resolve([
+            {
+                title: 'Todo 1',
+                description: 'This is my first todo.',
+                datetime: '2014-10-31 12:34:00'
+            },
+            {
+                title: 'Todo 2',
+                description: 'This is my second todo.',
+                datetime: '2014-12-15 12:34:00'
+            },
+            {
+                title: 'Todo 3',
+                description: 'This is my third todo.',
+                datetime: '2014-11-16 12:34:00'
+            }
+        ]);
+    }, 2000);
+
+    // Depending on the initial ordering set, even if the data is retrieved AFTER setting the ordering, the ordering still gets obeyed when Angular outputs the data to the page.
+    $scope.ordering = 'datetime';
 }]);
