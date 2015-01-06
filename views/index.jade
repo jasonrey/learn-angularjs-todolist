@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="components/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="index.css")
+        script(src="components/jquery/dist/jquery.min.js")
+        script(src="components/angularjs/angular.min.js")
+        script(src="index.js")
+    body
+        .container(ng-app="Todolist")
+            ul.list-group(ng-controller="ListController")
+                li.list-group-item(ng-repeat="item in items")
+                    h4.list-group-item-heading {{item.title}}
+                    p.list-group-item-text {{item.description}}
