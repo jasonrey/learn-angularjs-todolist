@@ -3,7 +3,17 @@
 var App = angular.module('Todolist', []);
 
 // Register the controller class
-App.controller('ListController', function($scope) {
+// Angular infers the dependency from the constructor function argument name
+// It is crucial that the variable starts with a $ to indicate that it is a built in service provided by Angular
+// Hence it is not possible to directly declare it as function(anyname){}
+// However, this conflicts with minification because minifier tends to shorten the variable name whenever possible
+// To prevent conflict with minification, Angular notes that you can pass in second parameter as array, that declares all the dependency in plain string, then provide the constructor function with any variable name
+
+// Below 2 lines are equivalent
+// App.controller('ListController', function($scope) {$scope.items = []});
+// App.controller('ListController', ['$scope', function(scope) {scope.items = []}]);
+
+App.controller('ListController', ['$scope', function($scope) {
     $scope.items = [
         {
             title: 'Todo 1',
@@ -23,4 +33,4 @@ App.controller('ListController', function($scope) {
     ];
 
     $scope.ordering = 'title';
-});
+}]);
