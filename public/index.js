@@ -13,9 +13,12 @@ var App = angular.module('Todolist', []);
 // App.controller('ListController', function($scope) {$scope.items = []});
 // App.controller('ListController', ['$scope', function(scope) {scope.items = []}]);
 
-App.controller('ListController', ['$scope', '$q', function($scope, $q) {
+App.controller('ListController', ['$scope', '$http', function($scope, $http) {
 
+/*
     // Showcases Promise concept where data can be retrieved through server
+
+    // Need to include $q in the dependency
 
     // Initialises a new deferred object
     var dfd = $q.defer();
@@ -46,6 +49,14 @@ App.controller('ListController', ['$scope', '$q', function($scope, $q) {
             }
         ]);
     }, 2000);
+*/
+
+    // $http.get/post/put/delete makes the request accordingly, and returns a promise object, with 2 http specific methods that is only available in $http service: success and error.
+    // You can either do $http.get().then(success(), error())
+    // Or $http.get().success(function).error(function)
+    $http.get('/items').success(function(data) {
+        $scope.items = data;
+    });
 
     // Depending on the initial ordering set, even if the data is retrieved AFTER setting the ordering, the ordering still gets obeyed when Angular outputs the data to the page.
     $scope.ordering = 'datetime';
