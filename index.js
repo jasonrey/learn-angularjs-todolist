@@ -13,14 +13,14 @@ app.get('/', function(req, res, next) {
 
 // For this sample, we use filesystem to read/store data to data.json
 // This can be easily changed to database
-app.get('/items', function(req, res, next) {
+app.get('/api/items', function(req, res, next) {
     var contents = fs.readFileSync('./data.json'),
         data = JSON.parse(contents);
 
     res.json(data);
 });
 
-app.get('/items/:id', function(req, res, next) {
+app.get('/api/items/:id', function(req, res, next) {
     var contents = fs.readFileSync('./data.json'),
         data = JSON.parse(contents);
 

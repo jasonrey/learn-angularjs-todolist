@@ -81,7 +81,7 @@ Controllers.controller('ItemsController', ['$scope', '$http', function($scope, $
     // $http.get/post/put/delete makes the request accordingly, and returns a promise object, with 2 http specific methods that is only available in $http service: success and error.
     // You can either do $http.get().then(success(), error())
     // Or $http.get().success(function).error(function)
-    $http.get('/items').success(function(data) {
+    $http.get('/api/items').success(function(data) {
         $scope.items = data;
     });
 
@@ -91,7 +91,7 @@ Controllers.controller('ItemsController', ['$scope', '$http', function($scope, $
 
 // Item controller needs to access the route params defined by :param in the $routeProvider, hence we inject the depdency of $routeParams
 Controllers.controller('ItemController', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
-    $http.get('/items/' + $routeParams.id).success(function(data) {
+    $http.get('/api/items/' + $routeParams.id).success(function(data) {
         $scope.item = data;
     });
 }]);
