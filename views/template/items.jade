@@ -13,3 +13,9 @@ div.list-group
     a.list-group-item(href="#/items/{{$index}}", ng-repeat="item in items | filterItems:query | orderBy:ordering")
         h4.list-group-item-heading {{item.title}}
         p.list-group-item-text {{item.datetime}}
+form.form-group(ng-submit="addItem()")
+    .h4 Add new item
+    .input-group
+        input.form-control(type="text", ng-model="item.title", placeholder="Title")
+        span.input-group-btn
+            button.btn.btn-primary.btn-block +

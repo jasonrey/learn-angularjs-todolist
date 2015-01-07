@@ -11,6 +11,17 @@ router.get('/items', function(req, res, next) {
     res.json(data);
 });
 
+router.put('/items', function(req, res, next) {
+    var contents = fs.readFileSync('./data.json'),
+        data = JSON.parse(contents);
+
+    data.push(req.body);
+
+    fs.writeFileSync('./data.json', JSON.stringify(data));
+
+    res.json(req.body);
+});
+
 router.get('/items/:id', function(req, res, next) {
     var contents = fs.readFileSync('./data.json'),
         data = JSON.parse(contents);

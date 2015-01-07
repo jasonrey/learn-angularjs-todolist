@@ -19,6 +19,17 @@ Controllers.factory('Items', ['$resource', function($resource) {
             },
             // This indicates that the api will return a list of object (instances) of Items
             isArray: true
+        },
+
+        create: {
+            method: 'PUT',
+            // Automatically infer the key from the object provided as params
+            // Also, no id is needed since we are creating a new object, so id will be null by default
+            params: {
+                id: null,
+                title: '@title',
+                datetime: '@datetime'
+            }
         }
     })
 }]);
@@ -110,6 +121,25 @@ Controllers.controller('ItemsController', ['$scope', 'Items', function($scope, I
 
     // Depending on the initial ordering set, even if the data is retrieved AFTER setting the ordering, the ordering still gets obeyed when Angular outputs the data to the page.
     $scope.ordering = 'datetime';
+
+    $scope.addItem = function() {
+        if ($scope.item.title) {
+            var d = new Date(),
+                newItem = {
+                    title: $scope.item.title,
+                    datetime: d.getFullYear() + '-' + ('00' + (d.getMonth() + 1)).slice(-2) + '-' + ('00' + d.getDate()).slice(-2) + ' ' + ('00' + d.getHours()).slice(-2) + ':' + ('00' + d.getMinutes()).slice(-2) + ':' + ('00' + d.getSeconds()).slice(-2)
+                };
+
+            $scope.items.push(newItem);
+
+            $scope.item.title = '';
+
+            // This will make a put request to the server
+            // We do not need to specify the key value pair because the method .create has a params definition that infers the key 'title' and 'datetime' from the object
+            // Second parameter is a callback if necessary
+            Items.create(newItem);
+        }
+    }
 }]);
 
 // Item controller needs to access the route params defined by :param in the $routeProvider, hence we inject the depdency of $routeParams
