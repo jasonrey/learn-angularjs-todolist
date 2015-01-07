@@ -1,6 +1,34 @@
 // Create a new module that holds all the controllers
 var Controllers = angular.module('Controllers', []);
 
+// Creates a filter provider with a custom name
+// It uses dependency injection markup, hence if there are any dependency needed:
+// Controllers.filter('filterItems', [dependency, function(dependency) {}]);
+// It should return a function that always receives the targetted filter items as the first parameter, while the subsequent parameter depends on declaration
+// filterItems:query, this makes query the second argument
+Controllers.filter('filterItems', function() {
+    return function(input, query) {
+        if (input === undefined) {
+            return;
+        }
+
+        if (query === undefined) {
+            return input;
+        }
+
+        var result = [],
+            regex = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), 'i');
+
+        $.each(input, function(i, item) {
+            if (item.title.search(regex) >= 0 || item.description.search(regex) >= 0) {
+                result.push(item);
+            }
+        });
+
+        return result;
+    };
+});
+
 // Register the controller class
 // Angular infers the dependency from the constructor function argument name
 // It is crucial that the variable starts with a $ to indicate that it is a built in service provided by Angular
