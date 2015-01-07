@@ -1,5 +1,26 @@
 // Create a new module that holds all the controllers
-var Controllers = angular.module('Controllers', []);
+var Controllers = angular.module('Controllers', ['ngResource']);
+
+// Create a custom service (like a class, but used within this scope) with ngResource to perform REST calls
+// Although we can actually use $resource directly, wrapping it up in a custom service allows us to give it custom name, in which can be then injected into other modules if needed
+// This is a high level $http service
+// ngResource is needed for this, hence we define this dependency in the module declaration above
+Controllers.factory('Items', ['$resource', function($resource) {
+    return $resource('api/items/:id', {}, {
+        // Custom methods that can be invoked by calling Items.*
+        query: {
+            method: 'GET',
+            params: {
+                // We define this as null to indicate this parameter is not needed
+                // This is because we are sharing 1 single route of api/items and api/items/:id
+                // In this case, when we are getting the list, the :id should not be there for it to point to the server's api/items route
+                id: null
+            },
+            // This indicates that the api will return a list of object (instances) of Items
+            isArray: true
+        }
+    })
+}]);
 
 // Creates a filter provider with a custom name
 // It uses dependency injection markup, hence if there are any dependency needed:
@@ -40,7 +61,7 @@ Controllers.filter('filterItems', function() {
 // App.controller('ItemsController', function($scope) {$scope.items = []});
 // App.controller('ItemsController', ['$scope', function(scope) {scope.items = []}]);
 
-Controllers.controller('ItemsController', ['$scope', '$http', function($scope, $http) {
+Controllers.controller('ItemsController', ['$scope', 'Items', function($scope, Items) {
 
 /*
     // Showcases Promise concept where data can be retrieved through server
@@ -77,13 +98,17 @@ Controllers.controller('ItemsController', ['$scope', '$http', function($scope, $
         ]);
     }, 2000);
 */
-
+/*
     // $http.get/post/put/delete makes the request accordingly, and returns a promise object, with 2 http specific methods that is only available in $http service: success and error.
     // You can either do $http.get().then(success(), error())
     // Or $http.get().success(function).error(function)
     $http.get('/api/items').success(function(data) {
         $scope.items = data;
     });
+*/
+
+    // Now instead of injecting $http service, we use our custom created service Items, and declaring it as a dependency of this controller
+    $scope.items = Items.query();
 
     // Depending on the initial ordering set, even if the data is retrieved AFTER setting the ordering, the ordering still gets obeyed when Angular outputs the data to the page.
     $scope.ordering = 'datetime';
