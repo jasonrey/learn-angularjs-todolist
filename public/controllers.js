@@ -6,7 +6,8 @@ var Controllers = angular.module('Controllers', ['ngResource']);
 // This is a high level $http service
 // ngResource is needed for this, hence we define this dependency in the module declaration above
 Controllers.factory('Items', ['$resource', function($resource) {
-    return $resource('api/items/:id', {}, {
+    // Prefiing a parameter value with @ to extract this key from the data object provided when calling $resource method. See below in Items.get
+    return $resource('api/items/:id', {id: '@id'}, {
         // Custom methods that can be invoked by calling Items.*
         query: {
             method: 'GET',
@@ -115,8 +116,9 @@ Controllers.controller('ItemsController', ['$scope', 'Items', function($scope, I
 }]);
 
 // Item controller needs to access the route params defined by :param in the $routeProvider, hence we inject the depdency of $routeParams
-Controllers.controller('ItemController', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
-    $http.get('/api/items/' + $routeParams.id).success(function(data) {
-        $scope.item = data;
-    });
+Controllers.controller('ItemController', ['$scope', '$routeParams', 'Items', function($scope, $routeParams, Items) {
+    // This is equivalent to
+    // $scope.item = Items.get({id: $routeParams.id})
+    // Because we specify that the default parameter as id: '@id', this means the method will automatically search for the key 'id' from the value provided, in which in this case, is $routeParams.id
+    $scope.item = Items.get($routeParams);
 }]);
