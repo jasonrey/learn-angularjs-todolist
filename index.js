@@ -20,6 +20,26 @@ app.get('/items', function(req, res, next) {
     res.json(data);
 });
 
+app.get('/items/:id', function(req, res, next) {
+    var contents = fs.readFileSync('./data.json'),
+        data = JSON.parse(contents);
+
+    res.json(data[req.params.id]);
+});
+
+// Routes for templates
+app.get('/template/:name', function(req, res, next) {
+    var name = req.params.name;
+
+    res.render('template/' + name, {}, function(err, html) {
+        if (err) {
+            return res.send(404, err.message);
+        } else {
+            res.end(html);
+        }
+    });
+});
+
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'));
