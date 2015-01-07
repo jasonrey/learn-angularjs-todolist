@@ -1,17 +1,15 @@
-.container
-    .topbar.clearfix
-        form.form-inline.pull-right
-            select.form-control(ng-model="ordering")
-                option(value="datetime") Datetime
-                option(value="title") Title
-            = " "
-            input.form-control(type="text", placeholder="Search", ng-model="query")
-    div.list-group
-        //- item in items | filterItems:query | orderBy:ordering
-        //- This is just basically piping "items" through various "filters". Default provided filter that comes with angular are like "filter", "orderBy"
-        //- You can provide custom filter that receives "items" as the first argument, and return the result set
-        //- items | yourCustomFilter:argument[1]... | ...
-        a.list-group-item(href="#/items/{{$index}}", ng-repeat="item in items | filterItems:query | orderBy:ordering")
-            h4.list-group-item-heading {{item.title}}
-            p.list-group-item-text {{item.description}}
-            p.list-group-item-text {{item.datetime}}
+.topbar.clearfix
+    form.form-inline.pull-right
+        select.form-control(ng-model="ordering")
+            option(value="datetime") Datetime
+            option(value="title") Title
+        = " "
+        input.form-control(type="text", placeholder="Search", ng-model="query")
+div.list-group
+    //- item in items | filterItems:query | orderBy:ordering
+    //- This is just basically piping "items" through various "filters". Default provided filter that comes with angular are like "filter", "orderBy"
+    //- You can provide custom filter that receives "items" as the first argument, and return the result set
+    //- items | yourCustomFilter:argument[1]... | ...
+    a.list-group-item(href="#/items/{{$index}}", ng-repeat="item in items | filterItems:query | orderBy:ordering")
+        h4.list-group-item-heading {{item.title}}
+        p.list-group-item-text {{item.datetime}}

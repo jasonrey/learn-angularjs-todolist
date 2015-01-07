@@ -42,7 +42,7 @@ Controllers.filter('filterItems', function() {
             regex = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), 'i');
 
         $.each(input, function(i, item) {
-            if (item.title.search(regex) >= 0 || item.description.search(regex) >= 0) {
+            if (item.title.search(regex) >= 0) {
                 result.push(item);
             }
         });
@@ -83,17 +83,14 @@ Controllers.controller('ItemsController', ['$scope', 'Items', function($scope, I
         dfd.resolve([
             {
                 title: 'Todo 1',
-                description: 'This is my first todo.',
                 datetime: '2014-10-31 12:34:00'
             },
             {
                 title: 'Todo 2',
-                description: 'This is my second todo.',
                 datetime: '2014-12-15 12:34:00'
             },
             {
                 title: 'Todo 3',
-                description: 'This is my third todo.',
                 datetime: '2014-11-16 12:34:00'
             }
         ]);

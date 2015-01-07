@@ -1,12 +1,10 @@
 [
     {
         "title": "A",
-        "description": "Apple",
         "datetime": "2014-10-10 10:10:10"
     },
     {
         "title": "B",
-        "description": "Boy",
         "datetime": "2014-11-11 11:11:11"
     }
 ]
