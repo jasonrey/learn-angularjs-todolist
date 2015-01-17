@@ -4,7 +4,7 @@
 var App = angular.module('Todolist', ['ngRoute', 'Controllers']);
 
 // Using the config() method, we request the $routeProvider to be injected into our config function and use the $routeProvider.when() method to define our routes.
-App.config(['$routeProvider', function($routeProvider) {
+App.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     // Define template and controller needed for each address
     // templateUrl can be a static html page that is already pre-rendered (/partials/template.html)
     // or it be a path that makes a GET call to the server that returns a template (server side templating system)
@@ -21,4 +21,6 @@ App.config(['$routeProvider', function($routeProvider) {
         .otherwise({
             redirectTo: '/items'
         });
+
+    $locationProvider.html5Mode(true);
 }]);
