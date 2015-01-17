@@ -10,10 +10,6 @@ app.set('view engine', 'jade');
 
 app.use(express.static('./public'));
 
-app.get('/', function(req, res, next) {
-    res.render('index');
-});
-
 // Split api/REST calls to a separate file
 var api = require('./api');
 app.use('/api', api);
@@ -29,6 +25,10 @@ app.get('/template/:name', function(req, res, next) {
             res.end(html);
         }
     });
+});
+
+app.use('/', function(req, res, next) {
+    res.render('index');
 });
 
 app.set('port', process.env.PORT || 3000);
